@@ -15,13 +15,25 @@ def create_app(config=config_dict['dev']):
     app = Flask(__name__)
 
     app.config.from_object(config)
-    api = Api(app,
-              title="Student-Management-System",
-              description="A REST API for Student Management")
 
-    api.add_namespace(student_namespace, path='student')
+    authorizations = {
+        "Bearer Auth": {
+            'type': "apikey",
+            'in': 'header',
+            'name': "Authorization",
+            'description': "Add a jwt with ** Bearer &lt;JWT&gt; to authorize"
+        }
+    }
+    api = Api(app,
+              title="student-Management-system",
+              description="A REST API for Student Management",
+              authorizations=authorizations,
+              security="Bearer Auth")
+
+    api.add_namespace(student_namespace, path='/student')
     api.add_namespace(course_namespace, path='/course')
     api.add_namespace(auth_namespace, path='/auth')
+    api.add_namespace(student_course_Namespace)
     db.init_app(app)
     jwt = JWTManager(app)
 

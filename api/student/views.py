@@ -5,7 +5,6 @@ from ..models.courses import Student
 from ..utils import db
 from flask_jwt_extended import jwt_required
 
-
 student_namespace = Namespace('student', description="Namespace for student")
 
 

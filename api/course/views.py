@@ -37,6 +37,8 @@ class CreateCourse(Resource):
     @course_namespace.expect(course_model)
     @course_namespace.doc(
         description="Crate a New Course "
+        
+    ,
     )
     @jwt_required()
     def post(self):

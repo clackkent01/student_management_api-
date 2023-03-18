@@ -1,8 +1,11 @@
 import os
 from decouple import config
 from datetime import timedelta
+import re
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+uri = config("DATABASE_URL")
+
 
 
 class Config:
@@ -21,7 +24,7 @@ class Devconfig(Config):
 
 
 class TestConfig:
-    TESTING=True
+    TESTING = True
     SQLALCHEMY_ECHO = True
     SQLALCHEMY_DATABASE_URI = "sqlite://"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -29,7 +32,9 @@ class TestConfig:
 
 
 class ProdConfig:
-    pass
+    SQLALCHEMY_DATABASE_URI = uri
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    DEBUG = config('DEBUG', cast=bool)
 
 
 config_dict = {
